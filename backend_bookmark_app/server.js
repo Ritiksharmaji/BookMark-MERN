@@ -12,8 +12,8 @@ const app = express();
 
 // Connect to the database
 mongoose.connect(process.env.MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true })
-  .then(() => console.log('MongoDB connected'))
-  .catch((err) => console.error('MongoDB connection error:', err));
+    .then(() => console.log('MongoDB connected'))
+    .catch((err) => console.error('MongoDB connection error:', err));
 
 // Middleware
 app.use(cors()); // Enable CORS
@@ -25,11 +25,11 @@ app.use('/api/bookmarks', bookmarkRoutes); // Bookmark-related routes
 
 // Root route
 app.get('/', (req, res) => {
-  res.send("Welcome to the bookmark application");
+    res.send("Welcome to the bookmark application");
 });
 
 // Register route
-app.post('/api/auth/register', async (req, res) => {
+app.post('/api/auth/register', async(req, res) => {
     const { username, email, password } = req.body;
     try {
         const hashedPassword = await bcrypt.hash(password, 10);
@@ -42,7 +42,7 @@ app.post('/api/auth/register', async (req, res) => {
 });
 
 // Login route
-app.post('/api/auth/login', async (req, res) => {
+app.post('/api/auth/login', async(req, res) => {
     const { email, password } = req.body;
     try {
         const user = await User.findOne({ email });
@@ -62,5 +62,5 @@ app.post('/api/auth/login', async (req, res) => {
 // Port setup
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
+    console.log(`Server running on port ${PORT}`);
 });
