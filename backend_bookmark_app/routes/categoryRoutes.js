@@ -1,8 +1,8 @@
 const express = require('express');
 const router = express.Router();
 const Category = require('../models/Category');
-
-router.post('/add-category', async (req, res) => {
+const authMiddleware = require('../middleware/authMiddleware');
+router.post('/add-category',  async (req, res) => {
     try {
         const { name } = req.body;
         const category = new Category({ name });
@@ -13,7 +13,7 @@ router.post('/add-category', async (req, res) => {
     }
 });
 
-router.get('/categories', async (req, res) => {
+router.get('/categories',authMiddleware, async (req, res) => {
     try {
         const categories = await Category.find();
         res.json(categories);

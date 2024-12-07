@@ -278,3 +278,39 @@ Let me know if you need help with any specific step!
 11) ![alt text](image-7.png)
 12) npm install mongodb
 13) npm install jsonwebtoken
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+## front-end ----------------------------------------------------------
+1) desing of landing page should be like this image where only three element should be there in header section Login and Registation and Logo by defacult the registation elemet and logo should be there in header section and in body login form only and by clciking on registaion element that login form should to change as registaion and ragistation header should to change as login text.
+
+2) ![alt text](image-8.png)
+
+3) 

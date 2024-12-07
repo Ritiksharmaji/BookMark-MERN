@@ -1,14 +1,29 @@
+
+require('dotenv').config();
 const jwt = require('jsonwebtoken');
+
 
 const authMiddleware = (req, res, next) => {
     const token = req.header('Authorization');
-    if (!token) return res.status(401).json({ error: 'Access Denied!' });
+    if (!token) {
+        return res.status(401).json({ error: 'Access Denied!' });
+    }
 
     try {
-        const verified = jwt.verify(token, process.env.JWT_SECRET);
+        console.log("Token received:", token);  // Log the token to check its value
+        
+        // Split the token correctly (to remove "Bearer " part)
+        const tokenValue = token.split(' ')[1]; 
+        console.log(`Verified token:`, tokenValue);  // Log the actual token value
+
+        // Use the same secret as the one used when signing the token
+        const verified = jwt.verify(tokenValue, process.env.JWT_SECRET); 
+        console.log("Token verified:", verified);
+
         req.user = verified.id;
         next();
     } catch (error) {
+        console.error("Error in token verification:", error);  // Log the error for debugging
         res.status(400).json({ error: 'Invalid Token!' });
     }
 };
