@@ -1,13 +1,22 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import "./index.css";
-
+// import { isCookie } from "react-router-dom";
+import Cookies from "js-cookie";
 
 function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
 
   const toggleMenu = () => {
     setMenuOpen(!menuOpen);
+  };
+
+  // Retrieve the token from cookies
+  const token = Cookies.get("jwt_token");
+
+  const handleLogout = () => {
+    Cookies.remove("jwt_token"); // Clear the token
+    window.location.href = "/login"; // Redirect to login page
   };
 
   return (
@@ -36,9 +45,24 @@ function Header() {
             </Link>
           </li>
           <li>
-            <Link to="/login" className="nav-item login-btn">
-              Login
-            </Link>
+          {token ? (
+              <Link to="/profile" className="nav-item login-btn">
+                Profile
+              </Link>
+            ) : null}
+           
+          </li>
+          <li>
+          {token ? (
+              <button className="nav-item logout-btn" onClick={handleLogout}>
+              Logout
+            </button>
+            ) : (
+              <Link to="/login" className="nav-item login-btn">
+                Login
+              </Link>
+            )}
+           
           </li>
         </ul>
       </nav>
