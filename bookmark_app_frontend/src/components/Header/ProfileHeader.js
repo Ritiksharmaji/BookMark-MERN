@@ -39,11 +39,31 @@ const ProfileHeader = ({ user }) => {
               Welcome, {user?.username || "User"}!
             </p>
           </li>
+          {/* Link to View All Bookmarks */}
           <li>
-            <Link to="/bookmark-list" className="nav-item bookmark-link">
-              BookmarkApp
+            <Link to="/bookmarks" className="nav-item bookmark-link">
+              View Bookmarks
             </Link>
           </li>
+          {/* Link to Add a New Bookmark */}
+          <li>
+            <Link to="/bookmark-add" className="nav-item add-link">
+              Add Bookmark
+            </Link>
+          </li>
+          {/* Link to Update a Bookmark */}
+          <li>
+            <Link to="/bookmark-update" className="nav-item update-link">
+              Update Bookmark
+            </Link>
+          </li>
+          {/* Link to Delete a Bookmark */}
+          <li>
+            <Link to="/bookmark-delete" className="nav-item delete-link">
+              Delete Bookmark
+            </Link>
+          </li>
+          {/* Logout Button */}
           <li>
             <button className="nav-item logout-btn" onClick={handleLogout}>
               Logout

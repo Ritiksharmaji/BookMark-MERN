@@ -132,4 +132,99 @@
       font-size: 1.1rem;
     }
   }
+  .container {
+    display: flex;
+    gap: 2rem;
+    padding: 1rem;
+  }
+  
+  .form-section,
+  .bookmarks-section {
+    flex: 1;
+    padding: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+  }
+  
+  .bookmark-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+  
+  .bookmark-list {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  .bookmark-item {
+    margin-bottom: 1rem;
+    padding: 1rem;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+  }
+  
+  .bookmark-item h3 {
+    margin: 0 0 0.5rem 0;
+  }
+  
+  .bookmark-item a {
+    color: #007bff;
+    text-decoration: none;
+  }
+  
+  .bookmark-item a:hover {
+    text-decoration: underline;
+  }
+  .header-container {
+    background-color: #007bff;
+    color: #fff;
+    padding: 1rem;
+    text-align: center;
+  }
+  
+  .container {
+    display: flex;
+    gap: 2rem;
+    padding: 1rem;
+  }
+  
+  .form-section,
+  .bookmarks-section {
+    flex: 1;
+    padding: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+  }
+  
+  .bookmark-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+  
+  .bookmark-list {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  .bookmark-item {
+    margin-bottom: 1rem;
+    padding: 1rem;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+  }
+  
+  .bookmark-item h3 {
+    margin: 0 0 0.5rem 0;
+  }
+  
+  .bookmark-item a {
+    color: #007bff;
+    text-decoration: none;
+  }
+  
+  .bookmark-item a:hover {
+    text-decoration: underline;
+  }
   

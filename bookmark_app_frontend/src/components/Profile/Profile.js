@@ -55,6 +55,7 @@ const Profile = () => {
   return (
     <div>
       <ProfileHeader user={user} />
+      
       <div className="profile-container">
         <div className="recent-bookmarks">
           <h3 className="recent-title">Recent Bookmarks</h3>

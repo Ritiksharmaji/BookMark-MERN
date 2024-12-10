@@ -7,52 +7,112 @@ const router = express.Router();
 // Create Bookmark
 router.post('/add', authMiddleware, async (req, res) => {
     const { name, purpose, description, category, dynamicFields } = req.body;
-    console.log('POST /add - Request Body:', req.body);
-    console.log('User:', req.user);  // Log user info from the authMiddleware
+
 
     try {
-        // Check if the category already exists
+        // Check if the category exists
         let existingCategory = await Category.findOne({ name: category });
 
-        // If category does not exist, create a new category
+        // Create new category if it doesn't exist
         if (!existingCategory) {
             existingCategory = new Category({
                 name: category,
-                description: `${category} description`,  // You can modify this to accept a description or generate one
+                description: `${category} description`,
             });
             await existingCategory.save();
         }
 
-        // Create the bookmark and link it to the existing or newly created category
+        // Create the bookmark
         const bookmark = new Bookmark({
             name,
             purpose,
             description,
-            category: existingCategory._id, // Use the category's ObjectId
-            user: req.user, // Use the authenticated user
-            dynamicFields
+            category: existingCategory._id,
+            user: req.user, // Authenticated user
+            dynamicFields,
         });
 
         await bookmark.save();
-        console.log('Bookmark Created:', bookmark);
         res.status(201).json(bookmark);
     } catch (error) {
-        console.error('Error creating bookmark:', error);
         res.status(500).json({ error: 'Failed to add bookmark!' });
     }
 });
 
-// Fetch User's Bookmarks
+// Fetch All Bookmarks for a User
 router.get('/', authMiddleware, async (req, res) => {
-    console.log('GET / - User:', req.user);  // Ensure user is authenticated
-
     try {
-        const bookmarks = await Bookmark.find({ user: req.user }).populate('category'); // Populate category details
-        console.log('Fetched Bookmarks:', bookmarks);
+        const bookmarks = await Bookmark.find({ user: req.user }).populate('category');
         res.status(200).json(bookmarks);
     } catch (error) {
-        console.error('Error fetching bookmarks:', error);
         res.status(500).json({ error: 'Failed to fetch bookmarks!' });
+    }
+});
+
+// Fetch a Single Bookmark by ID
+router.get('/bookmark/:id', authMiddleware, async (req, res) => {
+    const { id } = req.params;
+    try {
+        const bookmark = await Bookmark.findOne({ _id: id, user: req.user }).populate('category');
+        if (!bookmark) {
+            return res.status(404).json({ error: 'Bookmark not found!' });
+        }
+        res.status(200).json(bookmark);
+    } catch (error) {
+        res.status(500).json({ error: 'Failed to fetch bookmark!' });
+    }
+});
+
+// Update Bookmark
+router.put('/bookmark/:id', authMiddleware, async (req, res) => {
+    const { id } = req.params;
+    const { name, purpose, description, category, dynamicFields } = req.body;
+    try {
+        // Check if the category exists
+        let existingCategory = await Category.findOne({ name: category });
+
+        // Create new category if it doesn't exist
+        if (!existingCategory) {
+            existingCategory = new Category({
+                name: category,
+                description: `${category} description`,
+            });
+            await existingCategory.save();
+        }
+
+        // Update the bookmark
+        const updatedBookmark = await Bookmark.findOneAndUpdate(
+            { _id: id, user: req.user },
+            {
+                name,
+                purpose,
+                description,
+                category: existingCategory._id,
+                dynamicFields,
+            },
+            { new: true }
+        );
+
+        if (!updatedBookmark) {
+            return res.status(404).json({ error: 'Bookmark not found!' });
+        }
+        res.status(200).json(updatedBookmark);
+    } catch (error) {
+        res.status(500).json({ error: 'Failed to update bookmark!' });
+    }
+});
+
+// Delete Bookmark
+router.delete('/bookmark/:id', authMiddleware, async (req, res) => {
+    const { id } = req.params;
+    try {
+        const deletedBookmark = await Bookmark.findOneAndDelete({ _id: id, user: req.user });
+        if (!deletedBookmark) {
+            return res.status(404).json({ error: 'Bookmark not found!' });
+        }
+        res.status(200).json({ message: 'Bookmark deleted successfully!' });
+    } catch (error) {
+        res.status(500).json({ error: 'Failed to delete bookmark!' });
     }
 });
 

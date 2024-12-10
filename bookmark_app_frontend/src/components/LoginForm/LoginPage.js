@@ -15,7 +15,10 @@ const LoginForm = () => {
     const onSubmitSuccess = (jwtToken) => {
         Cookies.set("jwt_token", jwtToken, {
             expires: 30,
-             path: "/profile",
+            // path: ["/", "/bookmark-add"] 
+            path:'/',
+           
+             
         });
         console.log("JWT Token Set: ", jwtToken); // Add this for debugging
         navigate("/profile");

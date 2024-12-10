@@ -1,14 +1,22 @@
 import React, { useState } from "react";
-import "./AddBookmark.css"; // Ensure this file has the correct styles
+import Cookies from "js-cookie";
+import "./AddBookmark.css";
 
 const AddBookmark = ({ addBookmark }) => {
   const [formData, setFormData] = useState({
-    title: "",
+    name: "",
+    purpose: "",
     description: "",
     link: "",
     category: "",
     dynamicFields: [{ fieldName: "", value: "" }],
   });
+
+  const [bookmarks, setBookmarks] = useState([]); // State to store all bookmarks
+
+  // Retrieve the token from cookies
+  const token = Cookies.get("jwt_token");
+  console.log(token)
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -37,7 +45,7 @@ const AddBookmark = ({ addBookmark }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const token = localStorage.getItem("authToken");
+
     if (!token) {
       alert("You must be logged in to submit this form.");
       return;
@@ -48,7 +56,7 @@ const AddBookmark = ({ addBookmark }) => {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
+          Authorization: `Bearer ${token}`, // Use token from cookies
         },
         body: JSON.stringify(formData),
       });
@@ -57,15 +65,17 @@ const AddBookmark = ({ addBookmark }) => {
 
       if (response.ok) {
         addBookmark(data);
+        setBookmarks((prev) => [...prev, data]);
         setFormData({
-          title: "",
+          name: "",
+          purpose: "",
           description: "",
           link: "",
           category: "",
           dynamicFields: [{ fieldName: "", value: "" }],
         });
       } else {
-        alert("Failed to add bookmark: " + data.message || "Unknown error");
+        alert("Failed to add bookmark: " + (data.message || "Unknown error"));
       }
     } catch (error) {
       alert("Error adding bookmark: " + error.message);
@@ -73,87 +83,141 @@ const AddBookmark = ({ addBookmark }) => {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="bookmark-form">
-      <h2>Add Bookmark</h2>
-      <div className="form-group">
-        <input
-          type="text"
-          name="title"
-          value={formData.title}
-          onChange={handleChange}
-          placeholder="Title"
-          required
-        />
-      </div>
-      <div className="form-group">
-        <textarea
-          name="description"
-          value={formData.description}
-          onChange={handleChange}
-          placeholder="Description"
-          required
-        />
-      </div>
-      <div className="form-group">
-        <input
-          type="url"
-          name="link"
-          value={formData.link}
-          onChange={handleChange}
-          placeholder="Link"
-          required
-        />
-      </div>
-      <div className="form-group">
-        <input
-          type="text"
-          name="category"
-          value={formData.category}
-          onChange={handleChange}
-          placeholder="Category"
-          required
-        />
-      </div>
+    <div>
+      <div className="container">
+        <div className="form-section">
+          <form onSubmit={handleSubmit} className="bookmark-form">
+            <h2>Add Bookmark</h2>
+            <div className="form-group">
+              <input
+                type="text"
+                name="name"
+                value={formData.name}
+                onChange={handleChange}
+                placeholder="Name"
+                required
+              />
+            </div>
+            <div className="form-group">
+              <input
+                type="text"
+                name="purpose"
+                value={formData.purpose}
+                onChange={handleChange}
+                placeholder="Purpose"
+                required
+              />
+            </div>
+            <div className="form-group">
+              <textarea
+                name="description"
+                value={formData.description}
+                onChange={handleChange}
+                placeholder="Description"
+                required
+              />
+            </div>
+            <div className="form-group">
+              <input
+                type="text"
+                name="link"
+                value={formData.link}
+                onChange={handleChange}
+                placeholder="Link"
+                required
+              />
+            </div>
+            <div className="form-group">
+              <input
+                type="text"
+                name="category"
+                value={formData.category}
+                onChange={handleChange}
+                placeholder="Category"
+                required
+              />
+            </div>
 
-      {/* Dynamic Fields */}
-      <div className="form-group">
-        <h4>Dynamic Fields</h4>
-        {formData.dynamicFields.map((field, index) => (
-          <div key={index} className="dynamic-field">
-            <input
-              type="text"
-              name="fieldName"
-              value={field.fieldName}
-              onChange={(e) => handleDynamicFieldChange(index, e)}
-              placeholder="Field Name"
-              required
-            />
-            <input
-              type="text"
-              name="value"
-              value={field.value}
-              onChange={(e) => handleDynamicFieldChange(index, e)}
-              placeholder="Value"
-              required
-            />
-            <button
-              type="button"
-              onClick={() => handleRemoveDynamicField(index)}
-              className="remove-button"
-            >
-              Remove
+            {/* Dynamic Fields */}
+            <div className="form-group">
+              <h4>Dynamic Fields</h4>
+              {formData.dynamicFields.map((field, index) => (
+                <div key={index} className="dynamic-field">
+                  <input
+                    type="text"
+                    name="fieldName"
+                    value={field.fieldName}
+                    onChange={(e) => handleDynamicFieldChange(index, e)}
+                    placeholder="Field Name"
+                    required
+                  />
+                  <input
+                    type="text"
+                    name="value"
+                    value={field.value}
+                    onChange={(e) => handleDynamicFieldChange(index, e)}
+                    placeholder="Value"
+                    required
+                  />
+                  <button
+                    type="button"
+                    onClick={() => handleRemoveDynamicField(index)}
+                    className="remove-button"
+                  >
+                    Remove
+                  </button>
+                </div>
+              ))}
+              <button
+                type="button"
+                onClick={handleAddDynamicField}
+                className="add-field-button"
+              >
+                Add Dynamic Field
+              </button>
+            </div>
+
+            <button type="submit" className="submit-button">
+              Add Bookmark
             </button>
-          </div>
-        ))}
-        <button type="button" onClick={handleAddDynamicField} className="add-field-button">
-          Add Dynamic Field
-        </button>
-      </div>
+          </form>
+        </div>
 
-      <button type="submit" className="submit-button">
-        Add Bookmark
-      </button>
-    </form>
+        <div className="bookmarks-section">
+          <h2>Your Bookmarks</h2>
+          {bookmarks.length === 0 ? (
+            <p>No bookmarks found. Add your first bookmark!</p>
+          ) : (
+            <ul className="bookmark-list">
+              {bookmarks.map((bookmark) => (
+                <li key={bookmark._id} className="bookmark-item">
+                  <h3>{bookmark.name}</h3>
+                  <p>{bookmark.purpose}</p>
+                  <p>{bookmark.description}</p>
+                  <p>
+                    <strong>Category:</strong> {bookmark.category}
+                  </p>
+                  {bookmark.link && (
+                    <a href={bookmark.link} target="_blank" rel="noopener noreferrer">
+                      Visit Link
+                    </a>
+                  )}
+                  {bookmark.dynamicFields && (
+                    <ul>
+                      {bookmark.dynamicFields.map((dynamicField, index) => (
+                        <li key={index}>
+                          <strong>{dynamicField.fieldName}:</strong> {dynamicField.value}
+                        </li>
+                      ))}
+                    </ul>
+                  )}
+                </li>
+              ))}
+            </ul>
+          )}
+        </div>
+      </div>
+    </div>
   );
 };
 

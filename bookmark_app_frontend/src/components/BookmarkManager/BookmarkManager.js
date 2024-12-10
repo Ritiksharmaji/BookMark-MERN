@@ -52,7 +52,7 @@ const BookmarkManager = () => {
               Delete
             </button>
           </div>
-          <div className="form-container">
+          {/* <div className="form-container">
             {activeForm === "add" && <AddBookmark addBookmark={addBookmark} />}
             {activeForm === "update" && (
               <UpdateBookmark
@@ -66,7 +66,7 @@ const BookmarkManager = () => {
                 deleteBookmark={deleteBookmark}
               />
             )}
-          </div>
+          </div> */}
         </div>
       </div>
     </>
