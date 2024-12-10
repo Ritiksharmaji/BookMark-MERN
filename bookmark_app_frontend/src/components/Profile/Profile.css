@@ -1,0 +1,101 @@
+/* Profile.css */
+body {
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f9f9f9;
+   
+  }
+  
+  .profile-container {
+    display: grid;
+    grid-template-columns: 2fr 1fr; /* Two-column layout */
+    gap: 20px;
+    height: 100vh; /* Full window height */
+    overflow: hidden; /* Prevents overflowing */
+    padding: 20px;
+  }
+  
+  .recent-bookmarks, .user-details {
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    overflow-y: auto; /* Enable scrolling within sections */
+    padding: 20px;
+  }
+  
+  .recent-bookmarks {
+    height: calc(100vh - 40px); /* Fill available height */
+  }
+  
+  .user-details {
+    height: calc(100vh - 40px); /* Fill available height */
+  }
+  
+  .profile-title, .recent-title {
+    font-size: 1.8rem;
+    font-weight: bold;
+    margin-bottom: 15px;
+    color: #333;
+    text-align: center;
+  }
+  
+  .user-details p {
+    font-size: 1.1rem;
+    color: #555;
+    margin: 10px 0;
+  }
+  
+  .error-message {
+    color: #ff4d4f;
+    font-weight: bold;
+  }
+  
+  .bookmark-item {
+    background-color: #f5f5f5;
+    border-radius: 8px;
+    padding: 15px;
+    margin-bottom: 15px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+  
+  .bookmark-item:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+  }
+  
+  .bookmark-item a {
+    font-size: 1.2rem;
+    font-weight: bold;
+    text-decoration: none;
+    color: #0073e6;
+    margin-bottom: 5px;
+    transition: color 0.2s ease;
+  }
+  
+  .bookmark-item a:hover {
+    color: #005bb5;
+  }
+  
+  .bookmark-item p {
+    margin: 5px 0;
+    color: #666;
+  }
+  
+  .bookmark-item small {
+    font-size: 0.9rem;
+    color: #999;
+  }
+  
+  @media (max-width: 768px) {
+    .profile-container {
+      grid-template-columns: 1fr; /* Single-column layout */
+      height: auto;
+    }
+  
+    .recent-bookmarks, .user-details {
+      height: auto; /* Allow height to adjust on smaller screens */
+    }
+  }
+  

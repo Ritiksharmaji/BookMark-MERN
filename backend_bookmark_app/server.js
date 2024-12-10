@@ -7,6 +7,7 @@ const jwt = require('jsonwebtoken');
 const User = require('./models/User'); // User model for MongoDB
 const categoryRoutes = require('./routes/categoryRoutes'); // Import category routes
 const bookmarkRoutes = require('./routes/bookmarkRoutes'); // Import bookmark routes
+const profile = require('./routes/profile')
 
 const app = express();
 
@@ -22,6 +23,7 @@ app.use(express.json()); // Parse JSON request bodies
 // Routes
 app.use('/api/categories', categoryRoutes); // Category-related routes
 app.use('/api/bookmarks', bookmarkRoutes); // Bookmark-related routes
+app.use('/api/user',profile)
 
 // Root route
 app.get('/', (req, res) => {
@@ -44,6 +46,8 @@ app.post('/api/auth/register', async(req, res) => {
 // Login route
 app.post('/api/auth/login', async(req, res) => {
     const { email, password } = req.body;
+    console.log(`backend recived email:`, email)
+    console.log(`backend recived password:`, password)
     try {
         const user = await User.findOne({ email });
         if (!user) return res.status(404).json({ error: 'User not found!' });

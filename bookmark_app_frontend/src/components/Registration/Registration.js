@@ -11,12 +11,11 @@ const Registration = () => {
     const [success, setSuccess] = useState(false);
     const navigate = useNavigate();
 
-    const handleRegistration = async(e) => {
+    const handleRegistration = async (e) => {
         e.preventDefault();
         setError('');
         setSuccess(false);
 
-        // Creating payload for registration
         const payload = {
             username,
             email,
@@ -24,7 +23,6 @@ const Registration = () => {
         };
 
         try {
-            // Using fetch API to register the user
             const response = await fetch('http://localhost:5000/api/auth/register', {
                 method: 'POST',
                 headers: {
@@ -48,71 +46,57 @@ const Registration = () => {
         }
     };
 
-    return ( <
-        >
-        <
-        Header / >
-        <
-        div className = "registration-container" >
-        <
-        h2 className = "registration-title" > Create an Account < /h2> {
-        error && < p className = "error-message" > { error } < /p>} {
-        success && < p className = "success-message" > Registration successful!Redirecting... < /p>} <
-        form onSubmit = { handleRegistration }
-        className = "registration-form" >
-        <
-        div className = "form-group" >
-        <
-        label htmlFor = "username"
-        className = "form-label" > Username < /label> <
-        input type = "text"
-        id = "username"
-        placeholder = "Enter your username"
-        value = { username }
-        onChange = {
-            (e) => setUsername(e.target.value)
-        }
-        required className = "form-input" /
-        >
-        <
-        /div> <
-        div className = "form-group" >
-        <
-        label htmlFor = "email"
-        className = "form-label" > Email < /label> <
-        input type = "email"
-        id = "email"
-        placeholder = "Enter your email"
-        value = { email }
-        onChange = {
-            (e) => setEmail(e.target.value)
-        }
-        required className = "form-input" /
-        >
-        <
-        /div> <
-        div className = "form-group" >
-        <
-        label htmlFor = "password"
-        className = "form-label" > Password < /label> <
-        input type = "password"
-        id = "password"
-        placeholder = "Enter your password"
-        value = { password }
-        onChange = {
-            (e) => setPassword(e.target.value)
-        }
-        required className = "form-input" /
-        >
-        <
-        /div> <
-        button type = "submit"
-        className = "submit-button" > Register < /button> < /
-        form > <
-        p className = "redirect-link" >
-        Already have an account ? < a href = "/login" > Login here < /a> < /
-        p > <
-        /div> < / >
+    return (
+        <>
+            <Header />
+            <div className="registration-container">
+                <h2 className="registration-title">Create an Account</h2>
+                {error && <p className="error-message">{error}</p>}
+                {success && <p className="success-message">Registration successful! Redirecting...</p>}
+                <form onSubmit={handleRegistration} className="registration-form">
+                    <div className="form-group">
+                        <label htmlFor="username" className="form-label">Username</label>
+                        <input
+                            type="text"
+                            id="username"
+                            placeholder="Enter your username"
+                            value={username}
+                            onChange={(e) => setUsername(e.target.value)}
+                            required
+                            className="form-input"
+                        />
+                    </div>
+                    <div className="form-group">
+                        <label htmlFor="email" className="form-label">Email</label>
+                        <input
+                            type="email"
+                            id="email"
+                            placeholder="Enter your email"
+                            value={email}
+                            onChange={(e) => setEmail(e.target.value)}
+                            required
+                            className="form-input"
+                        />
+                    </div>
+                    <div className="form-group">
+                        <label htmlFor="password" className="form-label">Password</label>
+                        <input
+                            type="password"
+                            id="password"
+                            placeholder="Enter your password"
+                            value={password}
+                            onChange={(e) => setPassword(e.target.value)}
+                            required
+                            className="form-input"
+                        />
+                    </div>
+                    <button type="submit" className="submit-button">Register</button>
+                </form>
+                <p className="redirect-link">
+                    Already have an account? <a href="/login">Login here</a>
+                </p>
+            </div>
+        </>
     );
 };
 

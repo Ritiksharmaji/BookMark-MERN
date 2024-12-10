@@ -1,24 +1,30 @@
-import { Route} from 'react-router-dom'
-import Cookie from 'js-cookie'
+// import { Route} from 'react-router-dom'
+// import Cookie from 'js-cookie'
+// import { Navigate } from 'react-router-dom';
+
+// const ProtectedRoute = props => {
+//   const token = Cookie.get('jwt_token')
+//   if (token === undefined) {
+//     return <Navigate to="/login" />
+//   }
+//   return <Route {...props} />
+// }
+
+// export default ProtectedRoute
+import React from 'react';
 import { Navigate } from 'react-router-dom';
+import Cookies from 'js-cookie';
 
-const ProtectedRoute = props => {
-  const token = Cookie.get('jwt_token')
-  if (token === undefined) {
-    return <Navigate to="/login" />
-  }
-  return <Route {...props} />
-}
+const ProtectedRoute = ({ children }) => {
+    const token = Cookies.get('jwt_token');
 
-export default ProtectedRoute
+    if (!token) {
+        // If no JWT token, redirect to login page
+        return <Navigate to="/login" />;
+    }
 
-// import React from 'react';
+    // If the token exists, render the children (protected components)
+    return children;
+};
 
-
-// const ProtectedRoute = ({ children }) => {
-//   const isAuthenticated = !!localStorage.getItem('authToken'); // Example: Replace this with your authentication logic.
-
-//   return isAuthenticated ? children : <Navigate to="/login" />;
-// };
-
-// export default ProtectedRoute;
+export default ProtectedRoute;

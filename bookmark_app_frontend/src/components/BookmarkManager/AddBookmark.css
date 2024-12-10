@@ -1,0 +1,135 @@
+/* General form styling */
+.bookmark-form {
+    width: 50vw; /* Keep the width responsive */
+    margin: 0 auto; /* Center the form horizontally */
+    padding: 20px;
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    box-sizing: border-box;
+    min-height: 400px; /* Set a minimum height to avoid overflowing */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+  
+  /* Center form content */
+  .bookmark-form h2 {
+    text-align: center;
+    margin-bottom: 20px;
+    color: #007bff;
+  }
+  
+  /* Form Group Styling */
+  .form-group {
+    margin-bottom: 20px;
+  }
+  
+  .form-group input,
+  .form-group textarea {
+    width: 100%;
+    padding: 10px;
+    font-size: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+  }
+  
+  .form-group input:focus,
+  .form-group textarea:focus {
+    border-color: #007bff;
+    outline: none;
+  }
+  
+  /* Textarea styling */
+  .form-group textarea {
+    height: 150px;
+    resize: vertical;
+  }
+  
+  /* Dynamic Fields */
+  .dynamic-field {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 10px;
+  }
+  
+  .dynamic-field input {
+    flex: 1;
+  }
+  
+  .add-field-button {
+    background-color: #28a745;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 10px;
+  }
+  
+  .add-field-button:hover {
+    background-color: #218838;
+  }
+  
+  .remove-button {
+    background-color: #dc3545;
+    color: white;
+    padding: 5px 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .remove-button:hover {
+    background-color: #c82333;
+  }
+  
+  /* Submit Button Styling */
+  .submit-button {
+    width: 100%;
+    padding: 12px;
+    background-color: #007bff;
+    color: white;
+    font-size: 1rem;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .submit-button:hover {
+    background-color: #0056b3;
+  }
+  
+  /* Responsive Design */
+  @media (max-width: 768px) {
+    .bookmark-form {
+      width: 90vw; /* Make the form fill more of the screen on smaller devices */
+      padding: 15px;
+    }
+  
+    .form-group input,
+    .form-group textarea,
+    .form-group input[type="file"],
+    .submit-button {
+      font-size: 0.9rem;
+    }
+  
+    .dynamic-field {
+      flex-direction: column;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .bookmark-form {
+      width: 95vw; /* Ensure the form is responsive on small screens */
+      padding: 10px;
+    }
+  
+    .submit-button {
+      padding: 14px;
+      font-size: 1.1rem;
+    }
+  }
+  
