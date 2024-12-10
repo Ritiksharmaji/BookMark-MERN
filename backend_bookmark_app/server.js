@@ -2,7 +2,8 @@ require('dotenv').config(); // Load environment variables from .env file
 const express = require('express');
 const cors = require('cors');
 const mongoose = require('mongoose');
-const bcrypt = require('bcrypt');
+// const bcrypt = require('bcrypt');
+const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const User = require('./models/User'); // User model for MongoDB
 const categoryRoutes = require('./routes/categoryRoutes'); // Import category routes
