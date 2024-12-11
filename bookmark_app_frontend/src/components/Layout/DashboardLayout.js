@@ -6,8 +6,8 @@ const DashboardLayout = ({ children }) => {
   return (
     <div>
       {/* Common Header */}
-      <ProfileHeader />
-      
+      {/* <ProfileHeader />
+       */}
       {/* Page Content */}
       <main>{children}</main>
     </div>

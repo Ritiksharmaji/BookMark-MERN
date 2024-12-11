@@ -1,9 +1,14 @@
 import React, { useState } from "react";
 import Cookies from "js-cookie";
 import "./AddBookmark.css";
+import ProfileHeader from "../Header/ProfileHeader";
 
+<<<<<<< HEAD
 const AddBookmark = ({ addBookmark }) => {
  
+=======
+const AddBookmark = () => {
+>>>>>>> b29bffc8e8af5db43a264709724acd2467b5ad94
   const [formData, setFormData] = useState({
     name: "",
     purpose: "",
@@ -13,12 +18,20 @@ const AddBookmark = ({ addBookmark }) => {
     dynamicFields: [{ fieldName: "", value: "" }],
   });
 
+<<<<<<< HEAD
 
 
   // Retrieve the token from cookies
   const token = Cookies.get("jwt_token");
   console.log(token)
   console.log(addBookmark)
+=======
+  const [showPopup, setShowPopup] = useState(false); // State for popup visibility
+
+  // Retrieve the token from cookies
+  const token = Cookies.get("jwt_token");
+
+>>>>>>> b29bffc8e8af5db43a264709724acd2467b5ad94
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
@@ -66,8 +79,14 @@ const AddBookmark = ({ addBookmark }) => {
 
       console.log(`responsve from backend:`, data)
       if (response.ok) {
+<<<<<<< HEAD
        
         setBookmarks((prev) => [...prev, data]);
+=======
+        
+
+        // Reset form fields
+>>>>>>> b29bffc8e8af5db43a264709724acd2467b5ad94
         setFormData({
           name: "",
           purpose: "",
@@ -76,6 +95,10 @@ const AddBookmark = ({ addBookmark }) => {
           category: "",
           dynamicFields: [{ fieldName: "", value: "" }],
         });
+
+        // Show success popup
+        setShowPopup(true);
+        setTimeout(() => setShowPopup(false), 3000); // Hide popup after 3 seconds
       } else {
         alert("Failed to add bookmark: " + (data.message || "Unknown error"));
       }
@@ -85,6 +108,8 @@ const AddBookmark = ({ addBookmark }) => {
   };
 
   return (
+    <>
+    <ProfileHeader  />
     <div>
       <div className="container">
         <div className="form-section">
@@ -184,6 +209,7 @@ const AddBookmark = ({ addBookmark }) => {
             </button>
           </form>
         </div>
+<<<<<<< HEAD
 
         {/* <div className="bookmarks-section">
           <h2>Your Bookmarks</h2>
@@ -218,8 +244,19 @@ const AddBookmark = ({ addBookmark }) => {
             </ul>
           )}
         </div> */}
+=======
+>>>>>>> b29bffc8e8af5db43a264709724acd2467b5ad94
       </div>
+
+      {/* Success Popup */}
+      {showPopup && (
+        <div className="popup">
+          <p>Bookmark added successfully!</p>
+        </div>
+      )}
     </div>
+    </>
+   
   );
 };
 

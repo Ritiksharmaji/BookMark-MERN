@@ -1,10 +1,11 @@
 import React, { useState } from "react";
 import Cookies from "js-cookie";
 import "./ProfileHeader.css";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
 const ProfileHeader = ({ user }) => {
   const [menuOpen, setMenuOpen] = useState(false);
+  const location = useLocation(); // Hook to get current location
 
   const handleLogout = () => {
     Cookies.remove("jwt_token"); // Clear the token
@@ -34,35 +35,46 @@ const ProfileHeader = ({ user }) => {
       {/* Navigation Links */}
       <nav className={`nav-links ${menuOpen ? "open" : ""}`}>
         <ul className="nav-list">
-          <li>
+
+
+           {/* Conditionally render Home or Profile link */}
+           {location.pathname === "/profile" ? (
+            <li>
             <p className="nav-item welcome-message">
               Welcome, {user?.username || "User"}!
             </p>
           </li>
+          ) : null}
+
+          {/* Conditionally render Home or Profile link */}
+          {location.pathname === "/profile" ? (
+            <li>
+              <Link to="/" className="nav-item">
+                Home
+              </Link>
+            </li>
+          ) : (
+            <li>
+              <Link to="/profile" className="nav-item">
+                Profile
+              </Link>
+            </li>
+          )}
+
           {/* Link to View All Bookmarks */}
           <li>
             <Link to="/bookmarks" className="nav-item bookmark-link">
               View Bookmarks
             </Link>
           </li>
+
           {/* Link to Add a New Bookmark */}
           <li>
             <Link to="/bookmark-add" className="nav-item add-link">
               Add Bookmark
             </Link>
           </li>
-          {/* Link to Update a Bookmark */}
-          <li>
-            <Link to="/bookmark-update" className="nav-item update-link">
-              Update Bookmark
-            </Link>
-          </li>
-          {/* Link to Delete a Bookmark */}
-          <li>
-            <Link to="/bookmark-delete" className="nav-item delete-link">
-              Delete Bookmark
-            </Link>
-          </li>
+
           {/* Logout Button */}
           <li>
             <button className="nav-item logout-btn" onClick={handleLogout}>

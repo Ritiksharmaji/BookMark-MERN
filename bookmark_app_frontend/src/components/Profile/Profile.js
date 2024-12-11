@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import Cookies from "js-cookie";
 import ProfileHeader from "../Header/ProfileHeader";
 import "./Profile.css";
+import { Link } from "react-router-dom";
 
 const Profile = () => {
   const [user, setUser] = useState({});
@@ -59,12 +60,14 @@ const Profile = () => {
       <div className="profile-container">
         <div className="recent-bookmarks">
           <h3 className="recent-title">Recent Bookmarks</h3>
+         
+          {/* // In the recent-bookmarks section: */}
           <ul>
             {bookmarks.slice(0, 5).map((bookmark) => (
               <li key={bookmark._id} className="bookmark-item">
-                <a href={bookmark.link} target="_blank" rel="noopener noreferrer">
+                <Link to={`/bookmark/${bookmark._id}`}>
                   {bookmark.name}
-                </a>
+                </Link>
                 <p>{bookmark.description}</p>
                 <p>
                   <small>{new Date(bookmark.dateCreated).toLocaleString()}</small>

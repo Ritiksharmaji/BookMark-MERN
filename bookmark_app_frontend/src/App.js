@@ -15,6 +15,7 @@ import AddBookmark from './components/BookmarkManager/AddBookmark';
 import UpdateBookmark from './components/BookmarkManager/UpdateBookmark';
 import DeleteBookmark from './components/BookmarkManager/DeleteBookmark';
 import DashboardLayout from './components/Layout/DashboardLayout';
+import BookmarkDetails from './components/BookmarkManager/BookmarkDetails';
 
 const App = () => {
   return (
@@ -86,6 +87,18 @@ const App = () => {
               </DashboardLayout>
             </ProtectedRoute>
           }
+        />
+
+        <Route
+        path='/bookmark/:id'
+        element={
+          <ProtectedRoute>
+            <DashboardLayout>
+              <BookmarkDetails/>
+            </DashboardLayout>
+          </ProtectedRoute>
+        }
+        
         />
 
         {/* Fallback for Invalid Routes */}
