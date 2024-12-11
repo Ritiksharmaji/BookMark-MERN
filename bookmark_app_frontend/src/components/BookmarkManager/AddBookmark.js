@@ -3,6 +3,7 @@ import Cookies from "js-cookie";
 import "./AddBookmark.css";
 
 const AddBookmark = ({ addBookmark }) => {
+ 
   const [formData, setFormData] = useState({
     name: "",
     purpose: "",
@@ -12,12 +13,12 @@ const AddBookmark = ({ addBookmark }) => {
     dynamicFields: [{ fieldName: "", value: "" }],
   });
 
-  const [bookmarks, setBookmarks] = useState([]); // State to store all bookmarks
+
 
   // Retrieve the token from cookies
   const token = Cookies.get("jwt_token");
   console.log(token)
-
+  console.log(addBookmark)
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
@@ -63,8 +64,9 @@ const AddBookmark = ({ addBookmark }) => {
 
       const data = await response.json();
 
+      console.log(`responsve from backend:`, data)
       if (response.ok) {
-        addBookmark(data);
+       
         setBookmarks((prev) => [...prev, data]);
         setFormData({
           name: "",
@@ -183,7 +185,7 @@ const AddBookmark = ({ addBookmark }) => {
           </form>
         </div>
 
-        <div className="bookmarks-section">
+        {/* <div className="bookmarks-section">
           <h2>Your Bookmarks</h2>
           {bookmarks.length === 0 ? (
             <p>No bookmarks found. Add your first bookmark!</p>
@@ -215,7 +217,7 @@ const AddBookmark = ({ addBookmark }) => {
               ))}
             </ul>
           )}
-        </div>
+        </div> */}
       </div>
     </div>
   );

@@ -16,7 +16,7 @@ router.post('/register', async (req, res) => {
     }
 });
 
-
+// mongodb+srv://ritiksharma555698:ritiksharma@cluster0.twj90.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0
 router.post('/login', async (req, res) => {
     const { email, password } = req.body;
     try {
