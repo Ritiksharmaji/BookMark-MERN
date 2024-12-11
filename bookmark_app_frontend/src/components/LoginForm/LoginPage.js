@@ -12,6 +12,7 @@ const LoginForm = () => {
 
     const navigate = useNavigate();
 
+    const BaseUrl = 'https://book-mark-mern.vercel.app/'
     const onSubmitSuccess = (jwtToken) => {
         Cookies.set("jwt_token", jwtToken, {
             expires: 30,
@@ -32,7 +33,8 @@ const LoginForm = () => {
     const submitForm = async (event) => {
         event.preventDefault();
         const userDetails = { email, password };
-        const url = "http://localhost:5000/api/auth/login";
+        const url = `${BaseUrl}api/auth/login`;
+        // const url = "http://localhost:5000/api/auth/login";
         const options = {
             method: "POST",
             headers: {

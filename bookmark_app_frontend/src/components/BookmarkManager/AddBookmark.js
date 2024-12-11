@@ -3,12 +3,7 @@ import Cookies from "js-cookie";
 import "./AddBookmark.css";
 import ProfileHeader from "../Header/ProfileHeader";
 
-<<<<<<< HEAD
 const AddBookmark = ({ addBookmark }) => {
- 
-=======
-const AddBookmark = () => {
->>>>>>> b29bffc8e8af5db43a264709724acd2467b5ad94
   const [formData, setFormData] = useState({
     name: "",
     purpose: "",
@@ -18,20 +13,11 @@ const AddBookmark = () => {
     dynamicFields: [{ fieldName: "", value: "" }],
   });
 
-<<<<<<< HEAD
-
-
-  // Retrieve the token from cookies
-  const token = Cookies.get("jwt_token");
-  console.log(token)
-  console.log(addBookmark)
-=======
   const [showPopup, setShowPopup] = useState(false); // State for popup visibility
 
   // Retrieve the token from cookies
   const token = Cookies.get("jwt_token");
 
->>>>>>> b29bffc8e8af5db43a264709724acd2467b5ad94
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
@@ -70,23 +56,16 @@ const AddBookmark = () => {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`, // Use token from cookies
+          Authorization: `Bearer ${token}`,
         },
         body: JSON.stringify(formData),
       });
 
       const data = await response.json();
 
-      console.log(`responsve from backend:`, data)
       if (response.ok) {
-<<<<<<< HEAD
-       
-        setBookmarks((prev) => [...prev, data]);
-=======
-        
+        addBookmark(data); // Pass the new bookmark to the parent component
 
-        // Reset form fields
->>>>>>> b29bffc8e8af5db43a264709724acd2467b5ad94
         setFormData({
           name: "",
           purpose: "",
@@ -109,8 +88,7 @@ const AddBookmark = () => {
 
   return (
     <>
-    <ProfileHeader  />
-    <div>
+      <ProfileHeader />
       <div className="container">
         <div className="form-section">
           <form onSubmit={handleSubmit} className="bookmark-form">
@@ -209,54 +187,15 @@ const AddBookmark = () => {
             </button>
           </form>
         </div>
-<<<<<<< HEAD
 
-        {/* <div className="bookmarks-section">
-          <h2>Your Bookmarks</h2>
-          {bookmarks.length === 0 ? (
-            <p>No bookmarks found. Add your first bookmark!</p>
-          ) : (
-            <ul className="bookmark-list">
-              {bookmarks.map((bookmark) => (
-                <li key={bookmark._id} className="bookmark-item">
-                  <h3>{bookmark.name}</h3>
-                  <p>{bookmark.purpose}</p>
-                  <p>{bookmark.description}</p>
-                  <p>
-                    <strong>Category:</strong> {bookmark.category}
-                  </p>
-                  {bookmark.link && (
-                    <a href={bookmark.link} target="_blank" rel="noopener noreferrer">
-                      Visit Link
-                    </a>
-                  )}
-                  {bookmark.dynamicFields && (
-                    <ul>
-                      {bookmark.dynamicFields.map((dynamicField, index) => (
-                        <li key={index}>
-                          <strong>{dynamicField.fieldName}:</strong> {dynamicField.value}
-                        </li>
-                      ))}
-                    </ul>
-                  )}
-                </li>
-              ))}
-            </ul>
-          )}
-        </div> */}
-=======
->>>>>>> b29bffc8e8af5db43a264709724acd2467b5ad94
+        {/* Success Popup */}
+        {showPopup && (
+          <div className="popup">
+            <p>Bookmark added successfully!</p>
+          </div>
+        )}
       </div>
-
-      {/* Success Popup */}
-      {showPopup && (
-        <div className="popup">
-          <p>Bookmark added successfully!</p>
-        </div>
-      )}
-    </div>
     </>
-   
   );
 };
 

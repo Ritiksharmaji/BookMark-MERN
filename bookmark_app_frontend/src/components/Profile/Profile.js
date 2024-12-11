@@ -9,12 +9,14 @@ const Profile = () => {
   const [bookmarks, setBookmarks] = useState([]);
   const [error, setError] = useState("");
 
+   const BaseUrl = 'https://book-mark-mern.vercel.app/'
+
   useEffect(() => {
     const fetchProfileData = async () => {
       try {
         const token = Cookies.get("jwt_token");
-
-        const userResponse = await fetch("http://localhost:5000/api/user/profile", {
+        const url = `${BaseUrl}api/user/profile`;
+        const userResponse = await fetch(url, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -27,8 +29,8 @@ const Profile = () => {
         }
 
         setUser(userData.user);
-
-        const bookmarksResponse = await fetch("http://localhost:5000/api/user/bookmarks", {
+        const urlbookmark = `${BaseUrl}api/user/bookmarks`;
+        const bookmarksResponse = await fetch(urlbookmark, {
           headers: {
             Authorization: `Bearer ${token}`,
           },

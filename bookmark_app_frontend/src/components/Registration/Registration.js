@@ -10,6 +10,7 @@ const Registration = () => {
     const [error, setError] = useState('');
     const [success, setSuccess] = useState(false);
     const navigate = useNavigate();
+const BaseUrl = 'https://book-mark-mern.vercel.app/'
 
     const handleRegistration = async (e) => {
         e.preventDefault();
@@ -23,7 +24,8 @@ const Registration = () => {
         };
 
         try {
-            const response = await fetch('http://localhost:5000/api/auth/register', {
+            const urlregister = `${BaseUrl}api/auth/register`;
+            const response = await fetch(urlregister, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
