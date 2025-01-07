@@ -67,7 +67,7 @@ app.post('/api/auth/login', async(req, res) => {
 
   
 
-// Port setup
+// Port setup for port 5000 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`);
