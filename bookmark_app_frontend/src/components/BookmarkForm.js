@@ -1,154 +1,47 @@
-import React, { useState } from "react";
+import { useState } from "react";
+import { useDispatch } from "react-redux";
+import { addBookmark } from "../redux/bookmarkSlice";
+import "./styles.css";
 
-const BookmarkForm = ({ onBookmarkAdded }) => {
+const BookmarkForm = () => {
   const [formData, setFormData] = useState({
-    name: "",
+    title: "",
+    url: "",
+    category: "",
     purpose: "",
     description: "",
-    link: "",
-    category: "",
-    dynamicFields: [{ fieldName: "", value: "" }],
+    tags: "",
   });
 
+  const dispatch = useDispatch();
+
   const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
+    setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleDynamicFieldChange = (index, e) => {
-    const { name, value } = e.target;
-    const updatedFields = formData.dynamicFields.map((field, i) =>
-      i === index ? { ...field, [name]: value } : field
-    );
-    setFormData({ ...formData, dynamicFields: updatedFields });
-  };
-
-  const handleAddDynamicField = () => {
-    setFormData({
-      ...formData,
-      dynamicFields: [...formData.dynamicFields, { fieldName: "", value: "" }],
-    });
-  };
-
-  const handleRemoveDynamicField = (index) => {
-    const updatedFields = formData.dynamicFields.filter((_, i) => i !== index);
-    setFormData({ ...formData, dynamicFields: updatedFields });
-  };
-
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
-    const token = localStorage.getItem("authToken"); // Get the token from localStorage
-    if (!token) {
-      alert("You must be logged in to submit this form.");
-      return;
-    }
-
-    try {
-      const response = await fetch("http://localhost:5000/api/bookmarks/add", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`, // Add the token here
-        },
-        body: JSON.stringify(formData),
-      });
-
-      const data = await response.json();
-
-      if (response.ok) {
-        onBookmarkAdded(data); // Notify parent about the new bookmark
-        setFormData({
-          name: "",
-          purpose: "",
-          description: "",
-          link: "",
-          category: "",
-          dynamicFields: [{ fieldName: "", value: "" }],
-        });
-      } else {
-        alert("Failed to add bookmark: " + data.message || "Unknown error");
-        console.error("Error adding bookmark:", data);
-      }
-    } catch (error) {
-      alert("Error adding bookmark: " + error.message);
-      console.error("Error adding bookmark:", error);
-    }
+    const newBookmark = { 
+      ...formData, 
+      tags: formData.tags.split(",").map(tag => tag.trim()) // Convert tags to array 
+    };
+    dispatch(addBookmark(newBookmark));
+    setFormData({ title: "", url: "", category: "", purpose: "", description: "", tags: "" }); // Reset form
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <h3>Add Bookmark</h3>
-      <input
-        type="text"
-        name="name"
-        value={formData.name}
-        onChange={handleChange}
-        placeholder="Name"
-        required
-      />
-      <input
-        type="text"
-        name="purpose"
-        value={formData.purpose}
-        onChange={handleChange}
-        placeholder="Purpose"
-        required
-      />
-      <input
-        type="text"
-        name="description"
-        value={formData.description}
-        onChange={handleChange}
-        placeholder="Description"
-        required
-      />
-      <input
-        type="url"
-        name="link"
-        value={formData.link}
-        onChange={handleChange}
-        placeholder="Link"
-        required
-      />
-      <input
-        type="text"
-        name="category"
-        value={formData.category}
-        onChange={handleChange}
-        placeholder="Category"
-        required
-      />
-      <div>
-        <h4>Dynamic Fields</h4>
-        {formData.dynamicFields.map((field, index) => (
-          <div key={index}>
-            <input
-              type="text"
-              name="fieldName"
-              value={field.fieldName}
-              onChange={(e) => handleDynamicFieldChange(index, e)}
-              placeholder="Field Name"
-              required
-            />
-            <input
-              type="text"
-              name="value"
-              value={field.value}
-              onChange={(e) => handleDynamicFieldChange(index, e)}
-              placeholder="Value"
-              required
-            />
-            <button type="button" onClick={() => handleRemoveDynamicField(index)}>
-              Remove
-            </button>
-          </div>
-        ))}
-        <button type="button" onClick={handleAddDynamicField}>
-          Add Dynamic Field
-        </button>
-      </div>
-      <button type="submit">Add Bookmark</button>
-    </form>
+    <div className="form-container">
+      <h2>Add a New Bookmark</h2>
+      <form onSubmit={handleSubmit} className="form">
+        <input type="text" name="title" placeholder="Title" value={formData.title} onChange={handleChange} required />
+        <input type="url" name="url" placeholder="URL" value={formData.url} onChange={handleChange} required />
+        <input type="text" name="category" placeholder="Category" value={formData.category} onChange={handleChange} required />
+        <input type="text" name="purpose" placeholder="Purpose" value={formData.purpose} onChange={handleChange} />
+        <textarea name="description" placeholder="Description" value={formData.description} onChange={handleChange}></textarea>
+        <input type="text" name="tags" placeholder="Tags (comma-separated)" value={formData.tags} onChange={handleChange} />
+        <button type="submit">Add Bookmark</button>
+      </form>
+    </div>
   );
 };
 
